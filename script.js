@@ -44,9 +44,11 @@ function saveDataToStorage() {
 // 네비게이션 설정
 function setupNavigation() {
     const navLinks = document.querySelectorAll('.nav-link');
+    const footerLinks = document.querySelectorAll('.footer-link');
     const navToggle = document.getElementById('navToggle');
     const navMenu = document.getElementById('navMenu');
 
+    // 네비게이션 링크 이벤트
     navLinks.forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
@@ -55,6 +57,18 @@ function setupNavigation() {
             
             // 모바일에서 메뉴 닫기
             navMenu.classList.remove('active');
+        });
+    });
+
+    // footer 링크 이벤트
+    footerLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetPage = this.getAttribute('data-page');
+            showPage(targetPage);
+            
+            // 페이지 상단으로 스크롤
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         });
     });
 

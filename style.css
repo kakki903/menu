@@ -256,7 +256,8 @@ body {
 .form-group input,
 .form-group select,
 .search-group input,
-.upload-section input[type="text"] {
+.upload-section input[type="text"],
+.filter-group select {
     width: 100%;
     padding: 0.75rem;
     border: 1px solid var(--border);
@@ -266,15 +267,32 @@ body {
     background: var(--surface);
     color: var(--text-primary);
     transition: var(--transition);
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 0.5rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5em 1.5em;
+    padding-right: 2.5rem;
 }
 
 .form-group input:focus,
 .form-group select:focus,
 .search-group input:focus,
-.upload-section input[type="text"]:focus {
+.upload-section input[type="text"]:focus,
+.filter-group select:focus {
     outline: none;
     border-color: var(--primary-color);
     box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+/* input 타입은 화살표 제거 */
+.form-group input,
+.search-group input,
+.upload-section input[type="text"] {
+    background-image: none;
+    padding-right: 0.75rem;
 }
 
 /* Restaurant List */
@@ -649,6 +667,14 @@ body {
     .container {
         padding: 1rem;
     }
+
+    .footer-links {
+        gap: 1rem;
+    }
+
+    .footer-brand {
+        font-size: 1rem;
+    }
 }
 
 @media (max-width: 480px) {
@@ -700,4 +726,60 @@ body {
 
 @keyframes spin {
     to { transform: rotate(360deg); }
+}
+
+/* Footer */
+.footer {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 2rem 0;
+    margin-top: 4rem;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    text-align: center;
+}
+
+.footer-brand {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.footer-description {
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.footer-link {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.875rem;
+    transition: var(--transition);
+}
+
+.footer-link:hover {
+    color: var(--primary-color);
+}
+
+.footer-bottom {
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    color: var(--text-secondary);
+    font-size: 0.875rem;
 }
