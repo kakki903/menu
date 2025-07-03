@@ -141,7 +141,7 @@ function updateRecommendOptions() {
     const types = [...new Set(restaurants.map(r => r.type))].sort();
     const categories = [...new Set(restaurants.map(r => r.category))].sort();
     
-    updateSelectOptions('recommendUser', users, false);
+    updateSelectOptions('recommendUser', users, true);
     updateSelectOptions('recommendType', types);
     updateSelectOptions('recommendCategory', categories);
 }
@@ -363,7 +363,7 @@ function getRandomRecommendation() {
     
     // 조건에 맞는 식당 필터링
     let filteredRestaurants = restaurants.filter(restaurant => {
-        const matchUser = restaurant.user === user;
+        const matchUser = !user || restaurant.user === user;
         const matchType = !type || restaurant.type === type;
         const matchCategory = !category || restaurant.category === category;
         
