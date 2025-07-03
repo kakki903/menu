@@ -832,6 +832,12 @@ body {
     z-index: 3000;
     transform: translateX(100%);
     transition: var(--transition);
+    max-width: 350px;
+    word-wrap: break-word;
+    word-break: keep-all;
+    line-height: 1.4;
+    font-size: 0.9rem;
+    text-align: center;
 }
 
 .toast.show {
@@ -947,6 +953,10 @@ body {
         right: 1rem;
         left: 1rem;
         bottom: 1rem;
+        max-width: none;
+        font-size: 0.85rem;
+        padding: 0.75rem 1rem;
+        text-align: center;
     }
 
     .container {
