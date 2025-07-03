@@ -741,6 +741,17 @@ function clearRecommendationResult() {
     if (randomAnimation) {
         randomAnimation.style.display = 'none';
     }
+    
+    // 토스트 메시지도 강제로 숨기기
+    hideToast();
+}
+
+// 토스트 강제 숨기기 함수
+function hideToast() {
+    const toast = document.getElementById('toast');
+    if (toast) {
+        toast.classList.remove('show');
+    }
 }
 
 // 파일 입력 이벤트 리스너
