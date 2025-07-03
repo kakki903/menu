@@ -407,6 +407,113 @@ body {
     margin-bottom: 1rem;
 }
 
+/* 랜덤 애니메이션 */
+.random-animation {
+    background: var(--surface);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    padding: 2rem;
+    margin-bottom: 2rem;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.spinning-restaurant {
+    background: var(--background);
+    border: 2px solid var(--primary-color);
+    border-radius: var(--border-radius);
+    padding: 1rem 2rem;
+    margin: 0.5rem 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    animation: spinIn 0.3s ease-in-out;
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(79, 70, 229, 0.2);
+}
+
+.spinning-restaurant.fast {
+    animation: spinFast 0.1s ease-in-out;
+}
+
+.spinning-restaurant.medium {
+    animation: spinMedium 0.2s ease-in-out;
+}
+
+.spinning-restaurant.slow {
+    animation: spinSlow 0.4s ease-in-out;
+}
+
+.spinning-restaurant.final {
+    animation: finalSelection 0.8s ease-out forwards;
+    background: linear-gradient(135deg, var(--success-color), #059669);
+    color: white;
+    border-color: var(--success-color);
+    transform: scale(1.1);
+}
+
+.animation-progress {
+    margin-top: 1rem;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+}
+
+@keyframes spinIn {
+    0% {
+        transform: translateY(-20px) scale(0.8);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0) scale(1.05);
+        opacity: 1;
+    }
+}
+
+@keyframes spinFast {
+    0%, 100% {
+        transform: scale(1.05);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+@keyframes spinMedium {
+    0%, 100% {
+        transform: scale(1.05);
+    }
+    50% {
+        transform: scale(1.08);
+    }
+}
+
+@keyframes spinSlow {
+    0%, 100% {
+        transform: scale(1.05);
+    }
+    50% {
+        transform: scale(1.06);
+    }
+}
+
+@keyframes finalSelection {
+    0% {
+        transform: scale(1.05);
+        box-shadow: 0 4px 8px rgba(79, 70, 229, 0.2);
+    }
+    50% {
+        transform: scale(1.2);
+        box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+    }
+    100% {
+        transform: scale(1.1);
+        box-shadow: 0 6px 20px rgba(16, 185, 129, 0.3);
+    }
+}
+
 /* Data Actions */
 .data-actions {
     display: grid;

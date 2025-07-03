@@ -376,26 +376,112 @@ function getRandomRecommendation() {
         return;
     }
     
-    // 랜덤 선택
-    const randomIndex = Math.floor(Math.random() * filteredRestaurants.length);
-    const selectedRestaurant = filteredRestaurants[randomIndex];
+    // 기존 결과 숨기기
+    document.getElementById('recommendationResult').style.display = 'none';
     
-    // 결과 표시
-    document.getElementById('resultName').textContent = selectedRestaurant.name;
-    document.getElementById('resultUser').textContent = selectedRestaurant.user;
-    document.getElementById('resultType').textContent = selectedRestaurant.type;
-    document.getElementById('resultCategory').textContent = selectedRestaurant.category;
-    
-    const resultLink = document.getElementById('resultLink');
-    if (selectedRestaurant.link) {
-        resultLink.style.display = 'block';
-        resultLink.querySelector('a').href = selectedRestaurant.link;
-    } else {
-        resultLink.style.display = 'none';
+    // 애니메이션 시작
+    startRandomAnimation(filteredRestaurants);
+}
+
+// 랜덤 애니메이션 시작
+function startRandomAnimation(restaurants) {
+    // 애니메이션 컨테이너 생성
+    let animationContainer = document.getElementById('randomAnimation');
+    if (!animationContainer) {
+        animationContainer = document.createElement('div');
+        animationContainer.id = 'randomAnimation';
+        animationContainer.className = 'random-animation';
+        
+        const recommendSection = document.querySelector('.recommend-section');
+        const recommendForm = document.querySelector('.recommend-form');
+        recommendSection.insertBefore(animationContainer, recommendForm.nextSibling);
     }
     
-    document.getElementById('recommendationResult').style.display = 'block';
-    showToast('랜덤 추천이 완료되었습니다!', 'success');
+    animationContainer.style.display = 'flex';
+    animationContainer.innerHTML = `
+        <div id="spinningRestaurant" class="spinning-restaurant">준비중...</div>
+        <div class="animation-progress" id="animationProgress">식당을 선택하고 있습니다...</div>
+    `;
+    
+    const spinningElement = document.getElementById('spinningRestaurant');
+    const progressElement = document.getElementById('animationProgress');
+    
+    let currentIndex = 0;
+    let animationSpeed = 100; // 시작 속도 (ms)
+    let iterations = 0;
+    const totalIterations = 20 + Math.floor(Math.random() * 10); // 20-30회 반복
+    
+    function animateSelection() {
+        if (iterations >= totalIterations) {
+            // 애니메이션 완료
+            finishAnimation(restaurants[currentIndex], animationContainer);
+            return;
+        }
+        
+        // 현재 식당 표시
+        const currentRestaurant = restaurants[currentIndex];
+        spinningElement.textContent = currentRestaurant.name;
+        
+        // 애니메이션 클래스 적용
+        spinningElement.className = 'spinning-restaurant';
+        if (iterations < totalIterations * 0.5) {
+            spinningElement.classList.add('fast');
+        } else if (iterations < totalIterations * 0.8) {
+            spinningElement.classList.add('medium');
+            animationSpeed = 200;
+        } else {
+            spinningElement.classList.add('slow');
+            animationSpeed = 400;
+        }
+        
+        // 진행률 업데이트
+        const progress = Math.round((iterations / totalIterations) * 100);
+        progressElement.textContent = `식당을 선택하고 있습니다... (${progress}%)`;
+        
+        // 다음 식당으로 이동
+        currentIndex = (currentIndex + 1) % restaurants.length;
+        iterations++;
+        
+        // 다음 애니메이션 스케줄
+        setTimeout(animateSelection, animationSpeed);
+    }
+    
+    // 애니메이션 시작
+    setTimeout(animateSelection, 500);
+}
+
+// 애니메이션 완료
+function finishAnimation(selectedRestaurant, animationContainer) {
+    const spinningElement = document.getElementById('spinningRestaurant');
+    const progressElement = document.getElementById('animationProgress');
+    
+    // 최종 선택 애니메이션
+    spinningElement.className = 'spinning-restaurant final';
+    spinningElement.textContent = selectedRestaurant.name;
+    progressElement.textContent = '🎉 선택 완료!';
+    
+    // 1.5초 후 결과 표시
+    setTimeout(() => {
+        // 애니메이션 컨테이너 숨기기
+        animationContainer.style.display = 'none';
+        
+        // 결과 표시
+        document.getElementById('resultName').textContent = selectedRestaurant.name;
+        document.getElementById('resultUser').textContent = selectedRestaurant.user;
+        document.getElementById('resultType').textContent = selectedRestaurant.type;
+        document.getElementById('resultCategory').textContent = selectedRestaurant.category;
+        
+        const resultLink = document.getElementById('resultLink');
+        if (selectedRestaurant.link) {
+            resultLink.style.display = 'block';
+            resultLink.querySelector('a').href = selectedRestaurant.link;
+        } else {
+            resultLink.style.display = 'none';
+        }
+        
+        document.getElementById('recommendationResult').style.display = 'block';
+        showToast('랜덤 추천이 완료되었습니다!', 'success');
+    }, 1500);
 }
 
 // 데이터 다운로드
