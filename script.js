@@ -108,6 +108,8 @@ function showPage(pageId) {
         renderRestaurantList();
     } else if (pageId === 'recommend') {
         updateRecommendOptions();
+        // 랜덤 추천 결과 초기화
+        clearRecommendationResult();
     } else if (pageId === 'home') {
         updateStats();
     }
@@ -725,6 +727,20 @@ function showToast(message, type = 'info') {
     setTimeout(() => {
         toast.classList.remove('show');
     }, 3100);
+}
+
+// 랜덤 추천 결과 초기화
+function clearRecommendationResult() {
+    const recommendationResult = document.getElementById('recommendationResult');
+    const randomAnimation = document.getElementById('randomAnimation');
+    
+    if (recommendationResult) {
+        recommendationResult.style.display = 'none';
+    }
+    
+    if (randomAnimation) {
+        randomAnimation.style.display = 'none';
+    }
 }
 
 // 파일 입력 이벤트 리스너
