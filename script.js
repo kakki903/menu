@@ -356,10 +356,7 @@ function getRandomRecommendation() {
     const type = document.getElementById('recommendType').value;
     const category = document.getElementById('recommendCategory').value;
     
-    if (!user) {
-        showToast('사용자를 선택해주세요.', 'error');
-        return;
-    }
+    
     
     // 조건에 맞는 식당 필터링
     let filteredRestaurants = restaurants.filter(restaurant => {
