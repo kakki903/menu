@@ -399,44 +399,84 @@ function startRandomAnimation(restaurants) {
     
     animationContainer.style.display = 'flex';
     animationContainer.innerHTML = `
-        <div id="spinningRestaurant" class="spinning-restaurant">준비중...</div>
-        <div class="animation-progress" id="animationProgress">식당을 선택하고 있습니다...</div>
+        <div id="spinningRestaurant" class="spinning-restaurant">🎲 준비중...</div>
+        <div class="animation-progress" id="animationProgress">🎯 드럼롤... 맛집을 뽑고 있어요!</div>
     `;
+    
+    // 사운드 효과 시뮬레이션 (텍스트로)
+    const soundEffects = {
+        drumroll: () => showToast('🥁 드럼롤~', 'info'),
+        tick: () => {}, // 무음
+        tada: () => showToast('🎉 타다~~!', 'success')
+    };
     
     const spinningElement = document.getElementById('spinningRestaurant');
     const progressElement = document.getElementById('animationProgress');
     
     let currentIndex = 0;
-    let animationSpeed = 100; // 시작 속도 (ms)
+    let animationSpeed = 80; // 더 빠른 시작 속도
     let iterations = 0;
-    const totalIterations = 20 + Math.floor(Math.random() * 10); // 20-30회 반복
+    const totalIterations = 25 + Math.floor(Math.random() * 15); // 25-40회 반복
+    
+    // 진행 메시지 배열
+    const progressMessages = [
+        '🎯 드럼롤... 맛집을 뽑고 있어요!',
+        '🎲 주사위가 굴러가고 있어요~',
+        '🌟 운명의 맛집을 찾는 중...',
+        '🎪 마법의 룰렛이 돌아가요!',
+        '🎭 어떤 맛집이 나올까요?',
+        '🎨 요리의 신이 선택 중...',
+        '🎵 맛집 교향곡 연주 중...',
+        '🎪 서커스단이 공연 중...',
+        '🎠 회전목마처럼 빙글빙글~'
+    ];
+    
+    // 드럼롤 사운드 효과
+    soundEffects.drumroll();
     
     function animateSelection() {
         if (iterations >= totalIterations) {
             // 애니메이션 완료
+            soundEffects.tada();
             finishAnimation(restaurants[currentIndex], animationContainer);
             return;
         }
         
         // 현재 식당 표시
         const currentRestaurant = restaurants[currentIndex];
-        spinningElement.textContent = currentRestaurant.name;
+        const emojis = ['🍽️', '🥘', '🍜', '🍝', '🍖', '🍗', '🍱', '🍙', '🍚', '🥗'];
+        const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
+        spinningElement.textContent = `${randomEmoji} ${currentRestaurant.name}`;
         
         // 애니메이션 클래스 적용
         spinningElement.className = 'spinning-restaurant';
-        if (iterations < totalIterations * 0.5) {
+        if (iterations < totalIterations * 0.4) {
             spinningElement.classList.add('fast');
-        } else if (iterations < totalIterations * 0.8) {
+            animationSpeed = 60;
+        } else if (iterations < totalIterations * 0.7) {
             spinningElement.classList.add('medium');
-            animationSpeed = 200;
-        } else {
+            animationSpeed = 120;
+        } else if (iterations < totalIterations * 0.9) {
             spinningElement.classList.add('slow');
-            animationSpeed = 400;
+            animationSpeed = 250;
+        } else {
+            // 마지막 단계에서 더욱 느리게
+            animationSpeed = 500;
         }
         
-        // 진행률 업데이트
+        // 진행률 및 메시지 업데이트
         const progress = Math.round((iterations / totalIterations) * 100);
-        progressElement.textContent = `식당을 선택하고 있습니다... (${progress}%)`;
+        const messageIndex = Math.floor((iterations / totalIterations) * progressMessages.length);
+        const currentMessage = progressMessages[Math.min(messageIndex, progressMessages.length - 1)];
+        progressElement.textContent = `${currentMessage} (${progress}%)`;
+        
+        // 랜덤하게 진동 효과 추가
+        if (iterations > totalIterations * 0.8 && Math.random() < 0.3) {
+            animationContainer.style.transform = `translateX(${Math.random() * 4 - 2}px)`;
+            setTimeout(() => {
+                animationContainer.style.transform = 'translateX(0)';
+            }, 100);
+        }
         
         // 다음 식당으로 이동
         currentIndex = (currentIndex + 1) % restaurants.length;
@@ -446,8 +486,8 @@ function startRandomAnimation(restaurants) {
         setTimeout(animateSelection, animationSpeed);
     }
     
-    // 애니메이션 시작
-    setTimeout(animateSelection, 500);
+    // 초기 딜레이 후 애니메이션 시작
+    setTimeout(animateSelection, 800);
 }
 
 // 애니메이션 완료
@@ -455,12 +495,36 @@ function finishAnimation(selectedRestaurant, animationContainer) {
     const spinningElement = document.getElementById('spinningRestaurant');
     const progressElement = document.getElementById('animationProgress');
     
+    // confetti 효과 추가
+    createConfetti(animationContainer);
+    
     // 최종 선택 애니메이션
     spinningElement.className = 'spinning-restaurant final';
-    spinningElement.textContent = selectedRestaurant.name;
-    progressElement.textContent = '🎉 선택 완료!';
+    spinningElement.textContent = `🏆 ${selectedRestaurant.name}`;
     
-    // 1.5초 후 결과 표시
+    const celebrationMessages = [
+        '🎊 짜잔! 오늘의 운명은...',
+        '🎉 당첨! 맛집이 결정되었어요!',
+        '🌟 완벽한 선택이 나왔네요!',
+        '🎭 드디어 결정! 최고의 맛집!',
+        '🎪 대박! 환상적인 선택이에요!'
+    ];
+    
+    const randomMessage = celebrationMessages[Math.floor(Math.random() * celebrationMessages.length)];
+    progressElement.textContent = randomMessage;
+    
+    // 화면 흔들기 효과
+    let shakeCount = 0;
+    const shakeInterval = setInterval(() => {
+        document.body.style.transform = `translateX(${Math.sin(shakeCount) * 3}px)`;
+        shakeCount += 0.5;
+        if (shakeCount > 10) {
+            clearInterval(shakeInterval);
+            document.body.style.transform = 'translateX(0)';
+        }
+    }, 50);
+    
+    // 2초 후 결과 표시
     setTimeout(() => {
         // 애니메이션 컨테이너 숨기기
         animationContainer.style.display = 'none';
@@ -479,9 +543,47 @@ function finishAnimation(selectedRestaurant, animationContainer) {
             resultLink.style.display = 'none';
         }
         
-        document.getElementById('recommendationResult').style.display = 'block';
-        showToast('랜덤 추천이 완료되었습니다!', 'success');
-    }, 1500);
+        const resultElement = document.getElementById('recommendationResult');
+        resultElement.style.display = 'block';
+        
+        // 결과 카드에 특별한 애니메이션 효과 추가
+        const resultCard = resultElement.querySelector('.result-card');
+        resultCard.style.animation = 'none';
+        setTimeout(() => {
+            resultCard.style.animation = 'fadeInUp 0.8s ease, bounce 0.6s ease 0.2s';
+        }, 10);
+        
+        showToast('🎉 짜잔! 오늘의 맛집이 결정되었어요!', 'success');
+        
+        // 추가 축하 메시지
+        setTimeout(() => {
+            showToast('🍽️ 맛있게 드세요!', 'success');
+        }, 2000);
+        
+    }, 2000);
+}
+
+// confetti 효과 생성
+function createConfetti(container) {
+    for (let i = 0; i < 50; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.left = Math.random() * 100 + '%';
+        confetti.style.animationDelay = Math.random() * 3 + 's';
+        confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
+        
+        const colors = ['#ff6b6b', '#ffa726', '#66bb6a', '#42a5f5', '#ab47bc', '#26c6da', '#ffee58', '#ff7043'];
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        
+        container.appendChild(confetti);
+        
+        // 3초 후 제거
+        setTimeout(() => {
+            if (confetti.parentNode) {
+                confetti.parentNode.removeChild(confetti);
+            }
+        }, 5000);
+    }
 }
 
 // 데이터 다운로드
