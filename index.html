@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>맛집 추천기</title>
     <link href="style.css" rel="stylesheet" type="text/css" />
+    <!-- Google AdSense Script -->
+    <script
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+      crossorigin="anonymous"
+    ></script>
   </head>
   <body>
     <nav class="navbar">
@@ -26,7 +32,17 @@
         </div>
       </div>
     </nav>
-
+    <!-- Top Banner Ad -->
+    <div class="ad-container top-banner-ad">
+      <ins
+        class="adsbygoogle"
+        style="display: block"
+        data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+        data-ad-slot="1234567890"
+        data-ad-format="auto"
+        data-full-width-responsive="true"
+      ></ins>
+    </div>
     <main class="main-content">
       <!-- 홈 페이지 -->
       <section id="home" class="page active">
@@ -56,6 +72,18 @@
               <div class="stat-number" id="totalCategories">0</div>
               <div class="stat-label">카테고리</div>
             </div>
+          </div>
+
+          <!-- Home Page Ad -->
+          <div class="ad-container home-ad">
+            <ins
+              class="adsbygoogle"
+              style="display: block"
+              data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+              data-ad-slot="2345678901"
+              data-ad-format="auto"
+              data-full-width-responsive="true"
+            ></ins>
           </div>
         </div>
       </section>
@@ -331,5 +359,26 @@
     <div id="toast" class="toast"></div>
 
     <script src="script.js"></script>
+    <!-- AdSense 초기화 스크립트 -->
+    <script>
+      // AdSense 광고 초기화
+      function initializeAds() {
+        try {
+          (adsbygoogle = window.adsbygoogle || []).push({});
+          (adsbygoogle = window.adsbygoogle || []).push({});
+          (adsbygoogle = window.adsbygoogle || []).push({});
+          (adsbygoogle = window.adsbygoogle || []).push({});
+          (adsbygoogle = window.adsbygoogle || []).push({});
+          (adsbygoogle = window.adsbygoogle || []).push({});
+        } catch (e) {
+          console.log("AdSense 초기화 중 오류:", e);
+        }
+      }
+
+      // 페이지 로드 후 광고 초기화
+      window.addEventListener("load", function () {
+        setTimeout(initializeAds, 1000);
+      });
+    </script>
   </body>
 </html>
