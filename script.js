@@ -12,6 +12,10 @@ document.addEventListener('DOMContentLoaded', function() {
     updateFilterOptions();
     renderRestaurantList();
     updateRecommendOptions();
+    
+    // 새로고침 시 현재 페이지 유지
+    const savedPage = localStorage.getItem('currentPage') || 'home';
+    showPage(savedPage);
 });
 
 // 로컬 스토리지에서 데이터 로드
@@ -80,6 +84,9 @@ function showPage(pageId) {
     if (targetNavLink) {
         targetNavLink.classList.add('active');
     }
+    
+    // 현재 페이지 저장
+    localStorage.setItem('currentPage', pageId);
     
     // 페이지별 초기화
     if (pageId === 'manage') {
@@ -264,13 +271,13 @@ function closeModal() {
 
 // 식당 저장
 function saveRestaurant() {
-    const user = document.getElementById('modalUser').value.trim();
+    const user = document.getElementById('modalUser').value.trim() || '본인';
     const type = document.getElementById('modalType').value.trim();
     const category = document.getElementById('modalCategory').value.trim();
     const name = document.getElementById('modalName').value.trim();
     const link = document.getElementById('modalLink').value.trim();
     
-    if (!user || !type || !category || !name) {
+    if (!type || !category || !name) {
         showToast('모든 필수 항목을 입력해주세요.', 'error');
         return;
     }

@@ -239,19 +239,7 @@ body {
     margin-bottom: 1rem;
 }
 
-.search-group input {
-    width: 100%;
-    padding: 0.75rem;
-    border: 1px solid var(--border);
-    border-radius: var(--border-radius);
-    font-size: 0.875rem;
-}
 
-.search-group input:focus {
-    outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
-}
 
 /* Form Elements */
 .form-group {
@@ -266,17 +254,24 @@ body {
 }
 
 .form-group input,
-.form-group select {
+.form-group select,
+.search-group input,
+.upload-section input[type="text"] {
     width: 100%;
     padding: 0.75rem;
     border: 1px solid var(--border);
     border-radius: var(--border-radius);
     font-size: 0.875rem;
+    font-family: inherit;
+    background: var(--surface);
+    color: var(--text-primary);
     transition: var(--transition);
 }
 
 .form-group input:focus,
-.form-group select:focus {
+.form-group select:focus,
+.search-group input:focus,
+.upload-section input[type="text"]:focus {
     outline: none;
     border-color: var(--primary-color);
     box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
