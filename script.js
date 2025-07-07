@@ -524,11 +524,11 @@ function finishAnimation(selectedRestaurant, animationContainer) {
   spinningElement.textContent = `🏆 ${selectedRestaurant.name}`;
 
   const celebrationMessages = [
-    "🎊 짜잔! 오늘의 운명은...",
-    "🎉 당첨! 맛집이 결정되었어요!",
-    "🌟 완벽한 선택이 나왔네요!",
-    "🎭 드디어 결정! 최고의 맛집!",
-    "🎪 대박! 환상적인 선택이에요!",
+    "🎊 짜잔!",
+    "🎉 당첨!",
+    "🌟 완벽해!",
+    "🎭 최고의 맛집!",
+    "🎪 대박!",
   ];
 
   const randomMessage =
