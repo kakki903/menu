@@ -579,9 +579,9 @@ function finishAnimation(selectedRestaurant, animationContainer) {
     showToast("🎉 짜잔! 오늘의 맛집이 결정되었어요!", "success");
 
     // 추가 축하 메시지
-    setTimeout(() => {
-      showToast("🍽️ 맛있게 드세요!", "success");
-    }, 2000);
+    // setTimeout(() => {
+    //   showToast("🍽️ 맛있게 드세요!", "success");
+    // }, 2000);
   }, 2000);
 }
 
