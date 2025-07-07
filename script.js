@@ -576,7 +576,7 @@ function finishAnimation(selectedRestaurant, animationContainer) {
       resultCard.style.animation = "fadeInUp 0.8s ease, bounce 0.6s ease 0.2s";
     }, 10);
 
-    showToast("🎉 짜잔! 오늘의 맛집이 결정되었어요!", "success");
+    showToast("🎉 짜잔!", "success");
 
     // 추가 축하 메시지
     // setTimeout(() => {
@@ -637,7 +637,7 @@ function downloadData() {
   document.body.removeChild(link);
 
   URL.revokeObjectURL(url);
-  showToast("데이터가 다운로드되었습니다.", "success");
+  showToast("다운로드되었습니다.", "success");
 }
 
 // 데이터 업로드
