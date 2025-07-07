@@ -762,6 +762,7 @@ function showToast(message, type = "info") {
   // 3초 후 토스트 숨기기
   setTimeout(() => {
     toast.classList.remove("show");
+    toast.textContent = "";
   }, 3100);
 }
 
@@ -787,6 +788,7 @@ function hideToast() {
   const toast = document.getElementById("toast");
   if (toast) {
     toast.classList.remove("show");
+    toast.textContent = "";
   }
 }
 
