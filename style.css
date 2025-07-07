@@ -3,7 +3,10 @@
   padding: 0;
   box-sizing: border-box;
 }
-
+html,
+body {
+  overflow-x: hidden;
+}
 :root {
   --primary-color: #4f46e5;
   --primary-hover: #4338ca;
@@ -899,7 +902,6 @@ body {
 
 /* Toast */
 .toast {
-  /* 기존 스타일 유지 */
   position: fixed;
   bottom: 2rem;
   right: 2rem;
@@ -909,18 +911,20 @@ body {
   border-radius: var(--border-radius);
   box-shadow: var(--shadow-lg);
   z-index: 3000;
-  transform: translateX(100%);
-  transition: var(--transition);
-  max-width: 350px;
 
-  /* ✅ 수정 필요 */
-  word-break: break-word; /* ✅ 또는 break-all */
-  white-space: normal; /* ✅ 줄바꿈 허용 */
-  overflow-wrap: break-word;
+  /* ✅ 추천 방식 */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  max-width: 350px;
+  word-break: break-word;
+  white-space: normal;
+  text-align: center;
 }
 
 .toast.show {
-  transform: translateX(0);
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .toast.success {
